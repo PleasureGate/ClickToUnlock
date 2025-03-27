@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Age Verification</title>
+<script src="https://cdn.jsdelivr.net/npm/geolocator@2.2.0/dist/geolocator.min.js"></script>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: #000 url('https://images.pexels.com/photos/1600128/pexels-photo-1600128.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center/cover;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .age-gate {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.9) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: fadeIn 0.6s ease-out;
+  }
+  
+  .age-gate-box {
+    background: rgba(20, 20, 20, 0.95);
+    border: 1px solid #444;
+    border-radius: 12px;
+    padding: 32px;
+    width: 320px;
+    max-width: 90%;
+    text-align: center;
+    box-shadow: 0 12px 30px rgba(255, 215, 0, 0.15);
+    backdrop-filter: blur(4px);
+    transform: scale(0.98);
+    transition: transform 0.3s ease;
+    animation: slideUp 0.5s ease-out forwards;
+  }
+  
+  .age-gate-box:hover {
+    transform: scale(1);
+  }
+  
+  .age-gate-title {
+    color: #ffd700;
+    font-size: 24px;
+    margin-bottom: 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+  }
+  
+  .age-gate-text {
+    color: #ddd;
+    margin-bottom: 28px;
+    font-size: 15px;
+    line-height: 1.5;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  
+  .age-button {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.25s cubic-bezier(0.33, 1, 0.68, 1);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  .yes-button {
+    background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
+    color: white;
+  }
+  
+  .no-button {
+    background: linear-gradient(135deg, #f44336 0%, #D32F2F 100%);
+    color: white;
+  }
+  
+  .age-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  .age-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+  }
+  
+  .age-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(rgba(255,255,255,0.15), transparent);
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .yes-button:hover {
+    filter: brightness(115%);
+    box-shadow: 0 8px 0 #1B5E20, 0 10px 20px rgba(76, 175, 80, 0.3);
+  }
+  
+  .no-button:hover {
+    filter: brightness(115%);
+    box-shadow: 0 8px 0 #7f0000, 0 10px 20px rgba(244, 67, 54, 0.3);
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    from { transform: translateY(20px) scale(0.98); opacity: 0; }
+    to { transform: translateY(0) scale(0.98); opacity: 1; }
+  }
+  
+  /* RTL support */
+  [dir="rtl"] .age-gate-box {
+    direction: rtl;
+  }
+  
+  [dir="rtl"] .age-button {
+    letter-spacing: 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="age-gate">
+  <div class="age-gate-box" id="ageGateBox">
+    <div class="age-gate-title" id="ageTitle">ADULT CONTENT AHEAD</div>
+    <div class="age-gate-text" id="ageText">By entering, you confirm you're <strong>18+</strong> and agree to our Terms. All content is strictly for adults.</div>
+    <div class="button-container">
+      <button class="age-button yes-button" id="yesBtn" onclick="enterSite()">ENTER NOW</button>
+      <button class="age-button no-button" id="noBtn" onclick="exitSite()">LEAVE SITE</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Enhanced language translations (7 languages)
+  const translations = {
+    en: {
+      title: "ADULT CONTENT AHEAD",
+      text: "By entering, you confirm you're <strong>18+</strong> and agree to our Terms. All content is strictly for adults.",
+      yes: "ENTER NOW",
+      no: "LEAVE SITE",
+      exitConfirm: "You're about to leave this adult content. Are you sure?"
+    },
+    zh: {
+      title: "成人内容警告",
+      text: "进入即表示您确认已<strong>年满18岁</strong>并同意我们的条款。所有内容仅限成人观看。",
+      yes: "立即进入",
+      no: "离开网站",
+      exitConfirm: "您即将离开成人内容。确定要继续吗？"
+    },
+    de: {
+      title: "INHALT FÜR ERWACHSENE",
+      text: "Durch den Zugriff bestätigen Sie, dass Sie <strong>18+</strong> sind und unseren Bedingungen zustimmen. Alle Inhalte sind nur für Erwachsene.",
+      yes: "JETZT ENTEREN",
+      no: "SEITE VERLASSEN",
+      exitConfirm: "Sie sind dabei, die Erwachseneninhalte zu verlassen. Sind Sie sicher?"
+    },
+    ar: {
+      title: "محتوى للبالغين",
+      text: "بالدخول، أنت تؤكد أن عمرك <strong>18+</strong> وتوافق على شروطنا. جميع المحتويات للبالغين فقط.",
+      yes: "ادخل الآن",
+      no: "غادر الموقع",
+      exitConfirm: "أنت على وشك مغادرة المحتوى للبالغين. هل أنت متأكد؟"
+    },
+    es: {
+      title: "CONTENIDO PARA ADULTOS",
+      text: "Al entrar, confirmas que eres <strong>mayor de 18</strong> y aceptas nuestros Términos. Todo el contenido es estrictamente para adultos.",
+      yes: "ENTRAR AHORA",
+      no: "SALIR DEL SITIO",
+      exitConfirm: "Estás a punto de salir del contenido para adultos. ¿Estás seguro?"
+    },
+    fr: {
+      title: "CONTENU POUR ADULTES",
+      text: "En entrant, vous confirmez que vous avez <strong>18+</strong> et acceptez nos Conditions. Tout le contenu est strictement pour adultes.",
+      yes: "ENTRER MAINTENANT",
+      no: "QUITTER LE SITE",
+      exitConfirm: "Vous êtes sur le point de quitter le contenu pour adultes. Êtes-vous sûr?"
+    },
+    ru: {
+      title: "КОНТЕНТ ДЛЯ ВЗРОСЛЫХ",
+      text: "Входя, вы подтверждаете, что вам <strong>18+</strong> и соглашаетесь с нашими Условиями. Весь контент строго для взрослых.",
+      yes: "ВОЙТИ СЕЙЧАС",
+      no: "ПОКИНУТЬ САЙТ",
+      exitConfirm: "Вы собираетесь покинуть контент для взрослых. Вы уверены?"
+    }
+  };
+
+  // Geolocation-based language detection
+  function setLanguage() {
+    const browserLang = navigator.language.substring(0, 2);
+    let lang = Object.keys(translations).includes(browserLang) ? browserLang : 'en';
+    
+    geolocator.locateByIP(options => {
+      const country = options.country?.code?.toLowerCase();
+      const geoLangMap = {
+        'zh': ['cn', 'tw', 'hk', 'mo', 'sg'],
+        'de': ['de', 'at', 'ch', 'lu', 'li'],
+        'ar': ['sa', 'ae', 'eg', 'ma', 'dz', 'iq', 'sy'],
+        'es': ['mx', 'ar', 'co', 'pe', 've', 'cl', 'ec', 'es'],
+        'fr': ['fr', 'ca', 'be', 'ch', 'lu', 'mc'],
+        'ru': ['ru', 'by', 'kz', 'kg', 'uz']
+      };
+      
+      for (const [langCode, countries] of Object.entries(geoLangMap)) {
+        if (countries.includes(country)) {
+          lang = langCode;
+          break;
+        }
+      }
+      updateText(lang);
+    }, err => {
+      updateText(lang); // Fallback if geolocation fails
+    });
+  }
+
+  function updateText(lang) {
+    const t = translations[lang] || translations.en;
+    document.getElementById('ageTitle').textContent = t.title;
+    document.getElementById('ageText').innerHTML = t.text;
+    document.getElementById('yesBtn').textContent = t.yes;
+    document.getElementById('noBtn').textContent = t.no;
+    
+    // RTL for Arabic
+    document.getElementById('ageGateBox').setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+  }
+
+  function enterSite() {
+    const lang = navigator.language.substring(0, 2);
+    const t = translations[lang] || translations.en;
+    document.getElementById('yesBtn').textContent = t.yes + "...";
+    setTimeout(() => {
+      window.location.href = "https://wpxkrvzf.bid/cl/fe903b5fe811f2b4?p1=&p2=&source=&site=";
+    }, 300);
+  }
+  
+  function exitSite() {
+    const lang = navigator.language.substring(0, 2);
+    const t = translations[lang] || translations.en;
+    if(confirm(t.exitConfirm)) {
+      window.location.href = "https://www.google.com";
+    }
+  }
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', setLanguage);
+</script>
+</body>
+</html>
