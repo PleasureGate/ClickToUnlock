@@ -1,290 +1,117 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Age Verification</title>
-<script src="https://cdn.jsdelivr.net/npm/geolocator@2.2.0/dist/geolocator.min.js"></script>
-<!-- Histats.com  START  (aync)-->
-<script type="text/javascript">var _Hasync= _Hasync|| [];
-_Hasync.push(['Histats.start', '1,4939105,4,0,0,0,00010000']);
-_Hasync.push(['Histats.fasi', '1']);
-_Hasync.push(['Histats.track_hits', '']);
-(function() {
-var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
-hs.src = ('//s10.histats.com/js15_as.js');
-(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
-})();</script>
-<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4939105&101" alt="StatCounter - Free Web Tracker and Counter" border="0"></a></noscript>
-<!-- Histats.com  END  -->
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    background: #000 url('https://images.pexels.com/photos/1600128/pexels-photo-1600128.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') no-repeat center center/cover;
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  .age-gate {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(ellipse at center, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.9) 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    animation: fadeIn 0.6s ease-out;
-  }
-  
-  .age-gate-box {
-    background: rgba(20, 20, 20, 0.95);
-    border: 1px solid #444;
-    border-radius: 12px;
-    padding: 32px;
-    width: 320px;
-    max-width: 90%;
-    text-align: center;
-    box-shadow: 0 12px 30px rgba(255, 215, 0, 0.15);
-    backdrop-filter: blur(4px);
-    transform: scale(0.98);
-    transition: transform 0.3s ease;
-    animation: slideUp 0.5s ease-out forwards;
-  }
-  
-  .age-gate-box:hover {
-    transform: scale(1);
-  }
-  
-  .age-gate-title {
-    color: #ffd700;
-    font-size: 24px;
-    margin-bottom: 18px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
-  }
-  
-  .age-gate-text {
-    color: #ddd;
-    margin-bottom: 28px;
-    font-size: 15px;
-    line-height: 1.5;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-  }
-  
-  .age-button {
-    flex: 1;
-    padding: 14px;
-    border: none;
-    border-radius: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    font-size: 15px;
-    transition: all 0.25s cubic-bezier(0.33, 1, 0.68, 1);
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 5px 0 rgba(0, 0, 0, 0.2);
-  }
-  
-  .yes-button {
-    background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
-    color: white;
-  }
-  
-  .no-button {
-    background: linear-gradient(135deg, #f44336 0%, #D32F2F 100%);
-    color: white;
-  }
-  
-  .age-button:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 0 rgba(0, 0, 0, 0.2);
-  }
-  
-  .age-button:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
-  }
-  
-  .age-button::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 50%;
-    background: linear-gradient(rgba(255,255,255,0.15), transparent);
-    border-radius: 8px 8px 0 0;
-  }
-  
-  .yes-button:hover {
-    filter: brightness(115%);
-    box-shadow: 0 8px 0 #1B5E20, 0 10px 20px rgba(76, 175, 80, 0.3);
-  }
-  
-  .no-button:hover {
-    filter: brightness(115%);
-    box-shadow: 0 8px 0 #7f0000, 0 10px 20px rgba(244, 67, 54, 0.3);
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  
-  @keyframes slideUp {
-    from { transform: translateY(20px) scale(0.98); opacity: 0; }
-    to { transform: translateY(0) scale(0.98); opacity: 1; }
-  }
-  
-  /* RTL support */
-  [dir="rtl"] .age-gate-box {
-    direction: rtl;
-  }
-  
-  [dir="rtl"] .age-button {
-    letter-spacing: 0;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Verification</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000 url('https://images.pexels.com/photos/13520155/pexels-photo-13520155.jpeg') no-repeat center center/cover;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .age-gate {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .age-gate-box {
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 8px;
+            padding: 30px;
+            width: 300px;
+            max-width: 90%;
+            text-align: center;
+        }
+        .age-gate-title {
+            color: #fff;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        .age-gate-text {
+            color: #ddd;
+            margin-bottom: 25px;
+            font-size: 15px;
+        }
+        .button-container {
+            display: flex;
+            gap: 15px;
+        }
+        .age-button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        .yes-button {
+            background: #4CAF50;
+            color: white;
+        }
+        .no-button {
+            background: #f44336;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-
-<div class="age-gate">
-  <div class="age-gate-box" id="ageGateBox">
-    <div class="age-gate-title" id="ageTitle">ADULT CONTENT AHEAD</div>
-    <div class="age-gate-text" id="ageText">By entering, you confirm you're <strong>18+</strong> and agree to our Terms. All content is strictly for adults.</div>
-    <div class="button-container">
-      <button class="age-button yes-button" id="yesBtn" onclick="enterSite()">ENTER NOW</button>
-      <button class="age-button no-button" id="noBtn" onclick="exitSite()">LEAVE SITE</button>
+    <div class="age-gate">
+        <div class="age-gate-box">
+            <div class="age-gate-title">AGE VERIFICATION</div>
+            <div class="age-gate-text">You must be 18 or older to enter this website</div>
+            <div class="button-container">
+                <button class="age-button yes-button" onclick="enterSite()">I AM 18+</button>
+                <button class="age-button no-button" onclick="exitSite()">EXIT</button>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
-<script>
-  // Enhanced language translations (7 languages)
-  const translations = {
-    en: {
-      title: "ADULT CONTENT AHEAD",
-      text: "By entering, you confirm you're <strong>18+</strong> and agree to our Terms. All content is strictly for adults.",
-      yes: "ENTER NOW",
-      no: "LEAVE SITE",
-      exitConfirm: "You're about to leave this adult content. Are you sure?"
-    },
-    zh: {
-      title: "成人内容警告",
-      text: "进入即表示您确认已<strong>年满18岁</strong>并同意我们的条款。所有内容仅限成人观看。",
-      yes: "立即进入",
-      no: "离开网站",
-      exitConfirm: "您即将离开成人内容。确定要继续吗？"
-    },
-    de: {
-      title: "INHALT FÜR ERWACHSENE",
-      text: "Durch den Zugriff bestätigen Sie, dass Sie <strong>18+</strong> sind und unseren Bedingungen zustimmen. Alle Inhalte sind nur für Erwachsene.",
-      yes: "JETZT ENTEREN",
-      no: "SEITE VERLASSEN",
-      exitConfirm: "Sie sind dabei, die Erwachseneninhalte zu verlassen. Sind Sie sicher?"
-    },
-    ar: {
-      title: "محتوى للبالغين",
-      text: "بالدخول، أنت تؤكد أن عمرك <strong>18+</strong> وتوافق على شروطنا. جميع المحتويات للبالغين فقط.",
-      yes: "ادخل الآن",
-      no: "غادر الموقع",
-      exitConfirm: "أنت على وشك مغادرة المحتوى للبالغين. هل أنت متأكد؟"
-    },
-    es: {
-      title: "CONTENIDO PARA ADULTOS",
-      text: "Al entrar, confirmas que eres <strong>mayor de 18</strong> y aceptas nuestros Términos. Todo el contenido es estrictamente para adultos.",
-      yes: "ENTRAR AHORA",
-      no: "SALIR DEL SITIO",
-      exitConfirm: "Estás a punto de salir del contenido para adultos. ¿Estás seguro?"
-    },
-    fr: {
-      title: "CONTENU POUR ADULTES",
-      text: "En entrant, vous confirmez que vous avez <strong>18+</strong> et acceptez nos Conditions. Tout le contenu est strictement pour adultes.",
-      yes: "ENTRER MAINTENANT",
-      no: "QUITTER LE SITE",
-      exitConfirm: "Vous êtes sur le point de quitter le contenu pour adultes. Êtes-vous sûr?"
-    },
-    ru: {
-      title: "КОНТЕНТ ДЛЯ ВЗРОСЛЫХ",
-      text: "Входя, вы подтверждаете, что вам <strong>18+</strong> и соглашаетесь с нашими Условиями. Весь контент строго для взрослых.",
-      yes: "ВОЙТИ СЕЙЧАС",
-      no: "ПОКИНУТЬ САЙТ",
-      exitConfirm: "Вы собираетесь покинуть контент для взрослых. Вы уверены?"
-    }
-  };
-
-  // Geolocation-based language detection
-  function setLanguage() {
-    const browserLang = navigator.language.substring(0, 2);
-    let lang = Object.keys(translations).includes(browserLang) ? browserLang : 'en';
-    
-    geolocator.locateByIP(options => {
-      const country = options.country?.code?.toLowerCase();
-      const geoLangMap = {
-        'zh': ['cn', 'tw', 'hk', 'mo', 'sg'],
-        'de': ['de', 'at', 'ch', 'lu', 'li'],
-        'ar': ['sa', 'ae', 'eg', 'ma', 'dz', 'iq', 'sy'],
-        'es': ['mx', 'ar', 'co', 'pe', 've', 'cl', 'ec', 'es'],
-        'fr': ['fr', 'ca', 'be', 'ch', 'lu', 'mc'],
-        'ru': ['ru', 'by', 'kz', 'kg', 'uz']
-      };
-      
-      for (const [langCode, countries] of Object.entries(geoLangMap)) {
-        if (countries.includes(country)) {
-          lang = langCode;
-          break;
+    <script>
+        // Simple redirect function
+        function enterSite() {
+            window.location.href = "https://paysale.g2afse.com/sl?id=6707ff5cbb23f2139d89e9bf&pid=80975";
         }
-      }
-      updateText(lang);
-    }, err => {
-      updateText(lang); // Fallback if geolocation fails
-    });
-  }
 
-  function updateText(lang) {
-    const t = translations[lang] || translations.en;
-    document.getElementById('ageTitle').textContent = t.title;
-    document.getElementById('ageText').innerHTML = t.text;
-    document.getElementById('yesBtn').textContent = t.yes;
-    document.getElementById('noBtn').textContent = t.no;
-    
-    // RTL for Arabic
-    document.getElementById('ageGateBox').setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-  }
+        // Exit with confirmation warning
+        function exitSite() {
+            if(confirm("Are you sure you want to leave? This website contains adult content for 18+ only.")) {
+                window.location.href = "https://www.google.com";
+            }
+        }
 
-  function enterSite() {
-    const lang = navigator.language.substring(0, 2);
-    const t = translations[lang] || translations.en;
-    document.getElementById('yesBtn').textContent = t.yes + "...";
-    setTimeout(() => {
-      window.location.href = "https://paysale.g2afse.com/sl?id=6707ff5cbb23f2139d89e9bf&pid=80975";
-    }, 300);
-  }
-  
-  function exitSite() {
-    const lang = navigator.language.substring(0, 2);
-    const t = translations[lang] || translations.en;
-    if(confirm(t.exitConfirm)) {
-      window.location.href = "https://www.google.com";
-    }
-  }
+        // European language translations
+        const translations = {
+            'en': { title: "AGE VERIFICATION", text: "You must be 18 or older to enter this website", yes: "I AM 18+", no: "EXIT", confirm: "Are you sure you want to leave? This website contains adult content for 18+ only." },
+            'de': { title: "ALTERSVERIFIZIERUNG", text: "Sie müssen mindestens 18 Jahre alt sein", yes: "ICH BIN 18+", no: "BEENDEN", confirm: "Sind Sie sicher, dass Sie gehen möchten? Diese Website ist nur für Erwachsene." },
+            'fr': { title: "VÉRIFICATION D'ÂGE", text: "Vous devez avoir 18 ans ou plus", yes: "J'AI 18+", no: "QUITTER", confirm: "Êtes-vous sûr de vouloir partir? Ce site est réservé aux adultes." },
+            'es': { title: "VERIFICACIÓN DE EDAD", text: "Debes tener 18 años o más", yes: "SOY MAYOR 18+", no: "SALIR", confirm: "¿Seguro que quieres salir? Este sitio es solo para adultos." },
+            'it': { title: "VERIFICA DELL'ETÀ", text: "Devi avere almeno 18 anni", yes: "HO 18+", no: "ESCI", confirm: "Sei sicuro di voler uscire? Questo sito è solo per adulti." }
+        };
 
-  // Initialize
-  document.addEventListener('DOMContentLoaded', setLanguage);
-</script>
+        // Auto-detect language
+        const userLang = navigator.language.substring(0, 2);
+        if (translations[userLang]) {
+            const t = translations[userLang];
+            document.querySelector('.age-gate-title').textContent = t.title;
+            document.querySelector('.age-gate-text').textContent = t.text;
+            document.querySelector('.yes-button').textContent = t.yes;
+            document.querySelector('.no-button').textContent = t.no;
+            
+            // Update exit confirmation message
+            window.exitConfirmMsg = t.confirm;
+        }
+    </script>
 </body>
 </html>
