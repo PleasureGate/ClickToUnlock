@@ -3,126 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Histats.com  START  (aync)-->
-<script type="text/javascript">var _Hasync= _Hasync|| [];
-_Hasync.push(['Histats.start', '1,4939105,4,0,0,0,00010000']);
-_Hasync.push(['Histats.fasi', '1']);
-_Hasync.push(['Histats.track_hits', '']);
-(function() {
-var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
-hs.src = ('//s10.histats.com/js15_as.js');
-(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
-})();</script>
-<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4939105&101" alt="free stats" border="0"></a></noscript>
-<!-- Histats.com  END  -->
-    <title>Age Verification</title>
+    <title>Verification Required</title>
     <style>
         body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            text-align: center;
+            background: #f6f6f6;
             margin: 0;
             padding: 0;
-            background: #000 url('https://images.pexels.com/photos/13520155/pexels-photo-13520155.jpeg') no-repeat center center/cover;
-            font-family: Arial, sans-serif;
             height: 100vh;
-            overflow: hidden;
-        }
-        .age-gate {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
         }
-        .age-gate-box {
-            background: rgba(20, 20, 20, 0.9);
+        .verification-box {
+            background: white;
             border-radius: 8px;
             padding: 30px;
-            width: 300px;
-            max-width: 90%;
-            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-        .age-gate-title {
-            color: #fff;
-            font-size: 22px;
-            margin-bottom: 15px;
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
         }
-        .age-gate-text {
-            color: #ddd;
+        h1 {
+            color: #333;
+            font-size: 24px;
+        }
+        p {
+            color: #666;
             margin-bottom: 25px;
-            font-size: 15px;
         }
-        .button-container {
-            display: flex;
-            gap: 15px;
-        }
-        .age-button {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 15px;
-        }
-        .yes-button {
-            background: #4CAF50;
-            color: white;
-        }
-        .no-button {
-            background: #f44336;
-            color: white;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <div class="age-gate">
-        <div class="age-gate-box">
-            <div class="age-gate-title">AGE VERIFICATION</div>
-            <div class="age-gate-text">You must be 18 or older to enter this website</div>
-            <div class="button-container">
-                <button class="age-button yes-button" onclick="enterSite()">I AM 18+</button>
-                <button class="age-button no-button" onclick="exitSite()">EXIT</button>
-            </div>
-        </div>
+    <div class="verification-box">
+        <h1>Verifying you're human</h1>
+        <p>Please wait while we verify your browser...</p>
+        <div class="loader"></div>
     </div>
 
+    <!-- Histats Analytics -->
+    <script type="text/javascript">
+        var _Hasync= _Hasync|| [];
+        _Hasync.push(['Histats.start', '1,4939105,4,0,0,0,00010000']);
+        _Hasync.push(['Histats.fasi', '1']);
+        _Hasync.push(['Histats.track_hits', '']);
+        (function() {
+            var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+            hs.src = ('//s10.histats.com/js15_as.js');
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+        })();
+    </script>
+    <noscript><a href="/" target="_blank"><img src="//sstatic1.histats.com/0.gif?4939105&101" alt="free stats" border="0"></a></noscript>
+
     <script>
-        // Simple redirect function
-        function enterSite() {
-            window.location.href = "https://paysale.g2afse.com/sl?id=6707ff5cbb23f2139d89e9bf&pid=80975";
-        }
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const subId = urlParams.get('subid') || Math.random().toString(36).substring(7);
+        const payout = urlParams.get('payout') || '0';
 
-        // Exit with confirmation warning
-        function exitSite() {
-            if(confirm("Are you sure you want to leave? This website contains adult content for 18+ only.")) {
-                window.location.href = "https://www.google.com";
-            }
-        }
-
-        // European language translations
-        const translations = {
-            'en': { title: "AGE VERIFICATION", text: "You must be 18 or older to enter this website", yes: "I AM 18+", no: "EXIT", confirm: "Are you sure you want to leave? This website contains adult content for 18+ only." },
-            'de': { title: "ALTERSVERIFIZIERUNG", text: "Sie müssen mindestens 18 Jahre alt sein", yes: "ICH BIN 18+", no: "BEENDEN", confirm: "Sind Sie sicher, dass Sie gehen möchten? Diese Website ist nur für Erwachsene." },
-            'fr': { title: "VÉRIFICATION D'ÂGE", text: "Vous devez avoir 18 ans ou plus", yes: "J'AI 18+", no: "QUITTER", confirm: "Êtes-vous sûr de vouloir partir? Ce site est réservé aux adultes." },
-            'es': { title: "VERIFICACIÓN DE EDAD", text: "Debes tener 18 años o más", yes: "SOY MAYOR 18+", no: "SALIR", confirm: "¿Seguro que quieres salir? Este sitio es solo para adultos." },
-            'it': { title: "VERIFICA DELL'ETÀ", text: "Devi avere almeno 18 anni", yes: "HO 18+", no: "ESCI", confirm: "Sei sicuro di voler uscire? Questo sito è solo per adulti." }
-        };
-
-        // Auto-detect language
-        const userLang = navigator.language.substring(0, 2);
-        if (translations[userLang]) {
-            const t = translations[userLang];
-            document.querySelector('.age-gate-title').textContent = t.title;
-            document.querySelector('.age-gate-text').textContent = t.text;
-            document.querySelector('.yes-button').textContent = t.yes;
-            document.querySelector('.no-button').textContent = t.no;
+        // Postback function
+        function firePostback() {
+            const pbUrl = `http://ad.propellerads.com/conversion.php?aid=3798229&pid=&tid=142199&visitor_id=${subId}&payout=${payout}`;
             
-            // Update exit confirmation message
-            window.exitConfirmMsg = t.confirm;
+            // Send via Image Pixel (most reliable)
+            new Image().src = pbUrl;
+            
+            // Alternative fetch method
+            fetch(pbUrl, { mode: 'no-cors' })
+                .catch(e => console.log('Postback sent (fallback)'));
+        }
+
+        // One-time access control
+        if (sessionStorage.getItem('verified') === 'true') {
+            firePostback();
+            window.location.replace("https://paysale.g2afse.com/sl?id=6707ff5cbb23f2139d89e9bf&pid=80975&subid=" + subId);
+        } else {
+            setTimeout(function() {
+                sessionStorage.setItem('verified', 'true');
+                firePostback();
+                window.location.replace("https://paysale.g2afse.com/sl?id=6707ff5cbb23f2139d89e9bf&pid=80975&subid=" + subId);
+            }, 3000);
+        }
+
+        // Block new tab access
+        if (window.opener && window.opener !== window) {
+            window.location.replace("https://paysale.g2afse.com/sl?id=6707ff5cbb23f2139d89e9bf&pid=80975&subid=" + subId);
         }
     </script>
 </body>
